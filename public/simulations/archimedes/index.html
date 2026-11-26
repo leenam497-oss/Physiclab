@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mô phỏng lực đẩy Ác-si-mét</title>
+<style>
+:root{--navy:#163e69;--blue:#2879c7;--pale:#eaf5ff;--ink:#17324d;--line:#d5e1ec}
+*{box-sizing:border-box}body{margin:0;background:#f2f6fb;color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:linear-gradient(110deg,#12345a,#2879c7);color:white;padding:20px 24px}
+header h1{margin:0;font-size:clamp(22px,3vw,32px)}header p{margin:6px 0 0;color:#e2efff}
+main{max-width:1200px;margin:18px auto;padding:0 14px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(300px,.9fr);gap:16px}
+.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 4px 16px #17324d0c}
+h2{font-size:19px;margin:0 0 12px}.stage{min-height:440px;position:relative;overflow:hidden;background:linear-gradient(#f9fcff,#eef6fc);border-radius:12px}
+svg{width:100%;height:auto;display:block;touch-action:pan-y}
+.controls{display:grid;gap:15px}.control label{display:flex;justify-content:space-between;gap:12px;font-weight:650;margin-bottom:5px}.control input[type=range]{width:100%;accent-color:var(--blue)}
+.hint{font-size:13px;color:#5c7287;margin-top:4px}.readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.metric{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fbfdff}.metric span{display:block;color:#62788d;font-size:13px}.metric strong{font-size:22px;color:var(--navy)}
+.equation{background:#eaf5ff;border:1px solid #c6e2fb;border-radius:12px;padding:14px;margin-top:12px;font-size:18px;text-align:center}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}button{border:0;border-radius:9px;padding:10px 14px;font-weight:700;cursor:pointer;background:var(--blue);color:white}button.secondary{background:#e7eef6;color:#23415e}
+.note{margin-top:12px;background:#fff8df;border:1px solid #f1dfa0;border-radius:10px;padding:11px;font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}th,td{padding:8px;border-bottom:1px solid var(--line);text-align:right}th:first-child,td:first-child{text-align:left}th{background:#f1f7fc}
+@media(max-width:800px){main{grid-template-columns:1fr}.stage{min-height:300px}}
+</style>
+</head>
+<body>
+<header><h1>Thí nghiệm mô phỏng lực đẩy Ác-si-mét</h1><p>Điều chỉnh vật và chất lỏng, quan sát lực kế và kiểm tra công thức Fₐ = dV.</p></header>
+<main>
+<section class="panel">
+<h2>1. Quan sát thí nghiệm</h2>
+<div class="stage">
+<svg id="scene" viewBox="0 0 700 470" role="img" aria-label="Mô phỏng vật treo trên lực kế và nhúng trong bình nước">
+  <defs>
+    <linearGradient id="water" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#78c8f4" stop-opacity=".68"/><stop offset="1" stop-color="#2688c9" stop-opacity=".82"/></linearGradient>
+    <linearGradient id="metal" x1="0" x2="1"><stop offset="0" stop-color="#8998a6"/><stop offset=".5" stop-color="#e5edf2"/><stop offset="1" stop-color="#758594"/></linearGradient>
+  </defs>
+  <rect x="40" y="415" width="620" height="16" rx="5" fill="#8ea3b7"/>
+  <rect x="100" y="70" width="12" height="345" rx="4" fill="#465b70"/><rect x="82" y="405" width="48" height="10" rx="3" fill="#465b70"/>
+  <rect x="100" y="70" width="300" height="10" rx="4" fill="#465b70"/><rect x="390" y="70" width="10" height="44" fill="#465b70"/>
+  <g id="gauge">
+    <rect x="350" y="105" width="88" height="118" rx="12" fill="#d7f2f1" stroke="#287d87" stroke-width="3"/>
+    <rect x="361" y="119" width="66" height="88" rx="6" fill="#fff" stroke="#aac5c8"/>
+    <line x1="394" y1="128" x2="394" y2="193" stroke="#b4c7d1" stroke-width="3"/>
+    <g stroke="#526b7d" stroke-width="2"><line x1="394" y1="135" x2="411" y2="135"/><line x1="394" y1="147" x2="405" y2="147"/><line x1="394" y1="159" x2="411" y2="159"/><line x1="394" y1="171" x2="405" y2="171"/><line x1="394" y1="183" x2="411" y2="183"/></g>
+    <text x="394" y="115" text-anchor="middle" font-size="12" fill="#17324d">N</text>
+    <rect x="386" y="222" width="16" height="15" rx="4" fill="#667b8d"/>
+    <path id="spring" d="M394 237 l-7 5 14 5 -14 5 14 5 -14 5 7 5" fill="none" stroke="#526b7d" stroke-width="2.5"/>
+    <line x1="394" y1="267" x2="394" y2="285" stroke="#526b7d" stroke-width="3"/>
+  </g>
+  <path d="M245 247 L245 392 Q245 407 260 407 L575 407 Q590 407 590 392 L590 247" fill="none" stroke="#7e9eb4" stroke-width="5"/>
+  <path id="waterfill" d="M249 292 L249 392 Q249 403 261 403 L574 403 Q586 403 586 392 L586 292 Z" fill="url(#water)"/>
+  <path id="waterline" d="M249 292 Q270 286 292 292 T335 292 T378 292 T421 292 T464 292 T507 292 T550 292 T586 292" fill="none" stroke="#2386c1" stroke-width="3"/>
+  <line id="string" x1="394" y1="285" x2="394" y2="324" stroke="#526b7d" stroke-width="3"/>
+  <rect id="object" x="359" y="324" width="70" height="70" rx="3" fill="url(#metal)" stroke="#526b7d" stroke-width="2"/>
+  <text x="35" y="35" font-size="17" font-weight="700" fill="#234a70">Lực kế và vật treo</text>
+  <text id="stateLabel" x="265" y="448" font-size="15" fill="#234a70">Vật đang nhúng trong nước</text>
+  <text x="455" y="110" font-size="13" fill="#234a70">Lực kế</text>
+  <line x1="450" y1="114" x2="431" y2="132" stroke="#54748d" stroke-width="1.5"/>
+  <text x="470" y="267" font-size="13" fill="#234a70">Mặt nước</text>
+  <text x="470" y="284" font-size="13" fill="#234a70">────────</text>
+  <text id="objectLabel" x="442" y="365" font-size="14" fill="#234a70">Vật</text>
+</svg>
+</div>
+<div class="readouts">
+<div class="metric"><span>Trọng lượng trong không khí P</span><strong id="pVal">2,00 N</strong></div>
+<div class="metric"><span>Số chỉ lực kế khi nhúng P′</span><strong id="ppVal">1,60 N</strong></div>
+<div class="metric"><span>Lực đẩy Ác-si-mét Fₐ = P − P′</span><strong id="faVal">0,40 N</strong></div>
+<div class="metric"><span>Theo công thức Fₐ = dV</span><strong id="theoryVal">0,40 N</strong></div>
+</div>
+<div class="equation" id="equation">Fₐ = P − P′ = 2,00 − 1,60 = 0,40 N</div>
+<div class="actions"><button id="airBtn" class="secondary">Đưa vật lên khỏi nước</button><button id="waterBtn">Nhúng vật vào nước</button><button id="resetBtn" class="secondary">Đặt lại</button></div>
+</section>
+<section class="panel">
+<h2>2. Điều chỉnh thông số</h2>
+<div class="controls">
+<div class="control"><label for="volume">Thể tích vật <output id="volumeOut">40 cm³</output></label><input id="volume" type="range" min="10" max="100" step="5" value="40"><div class="hint">Giả sử vật được nhúng hoàn toàn.</div></div>
+<div class="control"><label for="density">Trọng lượng riêng chất lỏng <output id="densityOut">10.000 N/m³</output></label><input id="density" type="range" min="7000" max="13000" step="500" value="10000"><div class="hint">Nước thường lấy gần đúng d = 10.000 N/m³.</div></div>
+<div class="control"><label for="weight">Trọng lượng vật trong không khí <output id="weightOut">2,00 N</output></label><input id="weight" type="range" min="1" max="5" step=".1" value="2"></div>
+<div class="control"><label for="depth">Độ nhúng của vật <output id="depthOut">100%</output></label><input id="depth" type="range" min="0" max="100" step="5" value="100"><div class="hint">Mô hình đơn giản: lực đẩy tỉ lệ với thể tích phần vật chìm.</div></div>
+</div>
+<div class="note"><b>Câu hỏi gợi mở:</b> Khi tăng thể tích phần vật chìm, số chỉ lực kế thay đổi thế nào? Nếu giữ nguyên thể tích nhưng đổi chất lỏng thì lực đẩy có đổi không?</div>
+<h2 style="margin-top:18px">3. Bảng kiểm chứng</h2>
+<table><thead><tr><th>Đại lượng</th><th>Giá trị</th></tr></thead><tbody>
+<tr><td>Thể tích phần chìm V</td><td id="tabV">40 cm³</td></tr>
+<tr><td>Trọng lượng riêng d</td><td id="tabD">10.000 N/m³</td></tr>
+<tr><td>Độ giảm số chỉ P − P′</td><td id="tabDiff">0,40 N</td></tr>
+<tr><td>d × V (đổi V sang m³)</td><td id="tabTheory">0,40 N</td></tr>
+</tbody></table>
+<div class="hint">Lưu ý: Đây là mô phỏng lý tưởng; bỏ qua lực cản, sức căng bề mặt và sai số dụng cụ. Nếu vật nổi hoặc chạm đáy, cần xét điều kiện riêng.</div>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const fmt=(n,d=2)=>n.toLocaleString('vi-VN',{minimumFractionDigits:d,maximumFractionDigits:d});
+let submerged=true;
+function update(){
+ const Vcm=+$('volume').value, d=+$('density').value, P=+$('weight').value, depth=+$('depth').value;
+ const frac=submerged?depth/100:0, V=Vcm*1e-6*frac, Fa=d*V, Pp=Math.max(0,P-Fa);
+ $('volumeOut').textContent=Vcm+' cm³';$('densityOut').textContent=d.toLocaleString('vi-VN')+' N/m³';$('weightOut').textContent=fmt(P)+' N';$('depthOut').textContent=depth+'%';
+ $('pVal').textContent=fmt(P)+' N';$('ppVal').textContent=fmt(Pp)+' N';$('faVal').textContent=fmt(Fa)+' N';$('theoryVal').textContent=fmt(Fa)+' N';
+ $('equation').textContent=submerged?`Fₐ = P − P′ = ${fmt(P)} − ${fmt(Pp)} = ${fmt(Fa)} N`:'Vật ở ngoài chất lỏng: Fₐ = 0 N';
+ $('tabV').textContent=fmt(Vcm*frac,1)+' cm³';$('tabD').textContent=d.toLocaleString('vi-VN')+' N/m³';$('tabDiff').textContent=fmt(P-Pp)+' N';$('tabTheory').textContent=fmt(Fa)+' N';
+ $('stateLabel').textContent=submerged?(depth===0?'Vật vừa chạm mặt nước':`Vật chìm ${depth}%`):'Vật ở ngoài nước';
+ const waterTop=292, objH=70, bottom=394;
+ const y= submerged ? Math.min(bottom-objH, Math.max(waterTop-objH+5, waterTop+(100-depth)*.9)) : 210;
+ $('object').setAttribute('y',y);$('string').setAttribute('y2',y);$('spring').setAttribute('d',`M394 237 l-7 5 14 5 -14 5 14 5 -14 5 7 5`);
+ $('objectLabel').setAttribute('y',y+40);
+ $('object').setAttribute('opacity',submerged?1:.92);
+ $('waterfill').setAttribute('opacity',submerged?1:.78);
+ $('waterline').setAttribute('opacity',submerged?1:.78);
+ $('airBtn').disabled=!submerged;$('waterBtn').disabled=submerged;
+ $('airBtn').style.opacity=submerged?1:.55;$('waterBtn').style.opacity=submerged?.55:1;
+}
+['volume','density','weight','depth'].forEach(id=>$(id).addEventListener('input',update));
+$('airBtn').addEventListener('click',()=>{submerged=false;update()});
+$('waterBtn').addEventListener('click',()=>{submerged=true;update()});
+$('resetBtn').addEventListener('click',()=>{$('volume').value=40;$('density').value=10000;$('weight').value=2;$('depth').value=100;submerged=true;update()});
+update();
+</script>
+</body></html>

@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phòng thí nghiệm ảo Vật lí 12 – Bài 2</title>
+<style>
+:root{--bg:#080e19;--panel:#131e30;--line:#293951;--text:#edf4ff;--muted:#91a2bc;--cyan:#00c5df;--blue:#1688c8;--green:#29d49a;--yellow:#f3ca42;--orange:#f2a044;--red:#ff6874}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#10283a,transparent 34%),radial-gradient(ellipse at 100% 100%,#241a2b,transparent 32%),var(--bg);color:var(--text);font:15px/1.45 Inter,Segoe UI,Arial,sans-serif}
+header{background:#0b1322ed;border-bottom:1px solid var(--line);padding:15px clamp(14px,3vw,42px)}.head{max-width:1600px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}.brand small{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:1.5px}.brand h1{margin:3px 0;font-size:clamp(18px,2.3vw,27px)}.brand p{margin:0;color:var(--muted);font-size:12px}.top{display:flex;gap:8px}.pill,.tab{border:1px solid var(--line);background:#17243a;color:var(--text);padding:10px 15px;border-radius:22px;font-weight:750;cursor:pointer}.pill.active{background:#087fa8;border-color:#08a8c9}
+main{max-width:1600px;margin:auto;padding:22px clamp(12px,2.8vw,40px) 40px}.tabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:17px}.tab{border-radius:11px;color:#adbed4}.tab.active{background:#073b53;border-color:var(--cyan);color:#eaffff}
+.grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.95fr);gap:18px}.panel{background:linear-gradient(145deg,#141e31,#101827);border:1px solid var(--line);border-radius:17px;box-shadow:0 12px 35px #0005;overflow:hidden;min-width:0}.ph{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:17px 19px;border-bottom:1px solid var(--line)}.ph h2{margin:0;font-size:17px}.tag{font-size:10px;letter-spacing:.8px;color:#66e4f0;background:#063849;border:1px solid #07566b;border-radius:20px;padding:5px 9px;font-weight:800;white-space:nowrap}.stage{padding:14px;background:linear-gradient(145deg,#091321,#101d31)}.stage canvas{display:block;width:100%;height:420px;background:radial-gradient(ellipse at 50% 42%,#172b43 0%,#0b1424 72%);border:1px solid #2b4563;border-radius:13px;box-shadow:inset 0 0 35px #07101d,0 8px 22px #0005;touch-action:none}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px 14px}.stat{background:#101a2b;border:1px solid #202e44;border-radius:11px;padding:10px;text-align:center}.stat span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.6px}.stat strong{display:block;font-size:19px;margin-top:3px;font-variant-numeric:tabular-nums}.cyan{color:var(--cyan)}.explain{margin:0 14px 15px;border:1px solid #15364c;border-left:4px solid var(--cyan);background:#0d1c2c;padding:12px 14px;border-radius:9px;color:#d8e6f8;font-size:13px}.explain b{display:block;color:var(--cyan);margin-bottom:4px}
+.controls{padding:17px 19px}.control{margin-bottom:16px}.control label{display:flex;justify-content:space-between;gap:12px;color:#aebdd2;font-size:13px;margin-bottom:7px}.control output{color:#f2f7ff;font-weight:800}input[type=range]{width:100%;accent-color:var(--cyan);cursor:pointer}select{width:100%;background:#0b1525;border:1px solid #30415c;border-radius:9px;color:var(--text);padding:10px}.btnrow{display:flex;gap:8px;flex-wrap:wrap}.btn{background:linear-gradient(100deg,#087fbd,#075d9b);border:1px solid #0a8bc4;color:white;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}.btn.secondary{background:#202b3e;border-color:#35445c;color:#e1eaf7}.readouts{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:14px}.readout{background:#0d1728;border:1px solid #26354b;border-radius:10px;padding:10px}.readout small{display:block;color:var(--muted);font-size:11px}.readout strong{display:block;margin-top:3px;font-size:16px;font-variant-numeric:tabular-nums}.section{padding:16px 18px;border-top:1px solid var(--line)}.section h3{font-size:15px;margin:0 0 8px}.section p,.section li{font-size:13px;color:#aebdd2;line-height:1.55}.section ul{padding-left:19px;margin:7px 0}.note{background:#10273a;border:1px solid #174762;border-radius:9px;padding:10px 11px;color:#b8d6e9;font-size:12px;margin-top:11px}.graph{width:100%;height:190px;display:block;background:#0b1424;border:1px solid #26354b;border-radius:10px}.hidden{display:none!important}.eq{font-size:21px;color:#fff;text-align:center;padding:10px;background:#0d1728;border:1px solid #26354b;border-radius:10px;margin:10px 0;font-weight:800}.badge{display:inline-block;color:#9feeff;background:#073849;padding:3px 8px;border-radius:20px;font-size:11px}footer{text-align:center;color:#73839d;font-size:11px;padding:20px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}.stage canvas{height:360px}}@media(max-width:560px){.stage canvas{height:300px}.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:span 2}.top{width:100%}.top .pill{flex:1}}
+</style></head><body>
+<header><div class="head"><div class="brand"><small>PHYSICSLAB · PHÒNG THÍ NGHIỆM ẢO</small><h1>VẬT LÍ 12 · BÀI 2: NỘI NĂNG. ĐỊNH LUẬT I</h1><p>Khảo sát nội năng · Thực hiện công · Truyền nhiệt · Bảo toàn năng lượng</p></div><div class="top"><button class="pill" id="guide">❔ Hướng dẫn</button><button class="pill" id="sound">🔇 Âm thanh</button></div></div></header>
+<main>
+<nav class="tabs"><button class="tab active" data-id="tube">01 · Đun nóng khí</button><button class="tab" data-id="piston">02 · Nén khí và truyền nhiệt</button><button class="tab" data-id="joule">03 · Thí nghiệm Joule</button><button class="tab" data-id="law">04 · Định luật I</button></nav>
+<section id="tube" class="exp"><div class="grid">
+<div class="panel"><div class="ph"><h2>Đun nóng không khí trong ống nghiệm</h2><span class="tag">MÔ HÌNH PHÂN TỬ</span></div><div class="stage"><canvas id="tubeC" width="1000" height="550"></canvas></div>
+<div class="stats"><div class="stat"><span>Nhiệt độ khí</span><strong class="cyan" id="tTemp">20 °C</strong></div><div class="stat"><span>Áp suất tương đối</span><strong id="tPress">1,00 atm</strong></div><div class="stat"><span>Động năng TB tương đối</span><strong id="tEnergy">1,00</strong></div></div><div class="explain"><b id="tTitle">Quan sát trước khi đun</b><span id="tDesc">Khi được đun nóng, không khí trong ống nghiệm nhận nhiệt. Động năng chuyển động nhiệt của các phân tử tăng, áp suất tăng và có thể đẩy nút bấc bật ra.</span></div></div>
+<aside class="panel"><div class="ph"><h2>Bảng điều khiển</h2><span class="tag">THAO TÁC</span></div><div class="controls">
+<div class="control"><label for="tHeat">Mức độ đun nóng <output id="tHeatO">20 °C</output></label><input id="tHeat" type="range" min="20" max="180" value="20"></div>
+<div class="control"><label for="tStopper">Độ giữ của nút bấc <output id="tStopperO">Trung bình</output></label><input id="tStopper" type="range" min="1" max="3" value="2"></div>
+<div class="btnrow"><button class="btn" id="tRun">▶ Bắt đầu đun</button><button class="btn secondary" id="tReset">↺ Đặt lại</button></div>
+<div class="section" style="padding:18px 0 0;border:0"><h3>Nhiệm vụ khám phá</h3><ul><li>Tăng dần mức độ đun nóng.</li><li>Quan sát chuyển động của các phân tử khí và áp suất trong ống.</li><li>Thay đổi độ giữ của nút bấc để tìm điều kiện nút bật ra.</li></ul><h3>Câu hỏi</h3><p>Trước khi nút bấc bật ra, nội năng khí tăng do động năng hay thế năng phân tử? Vì sao nút bấc bật ra là dấu hiệu động năng phân tử khí tăng?</p><div class="note">Mô hình định tính ở thể tích gần như không đổi: áp suất tăng theo nhiệt độ tuyệt đối. Nút bấc bật ra khi áp suất vượt ngưỡng giữ giả định. Đây là mô phỏng an toàn, không thay thế thí nghiệm thật có gia nhiệt.</div></div></div></aside></div></section>
+
+<section id="piston" class="exp hidden"><div class="grid">
+<div class="panel"><div class="ph"><h2>Xi lanh – pít-tông: hai cách làm thay đổi nội năng</h2><span class="tag">CÔNG VÀ TRUYỀN NHIỆT</span></div><div class="stage"><canvas id="pistonC" width="1000" height="550"></canvas></div>
+<div class="stats"><div class="stat"><span>Nhiệt độ khí</span><strong class="cyan" id="pTemp">300 K</strong></div><div class="stat"><span>Thể tích tương đối</span><strong id="pVol">1,00</strong></div><div class="stat"><span>Nội năng tương đối</span><strong id="pU">1,00</strong></div></div><div class="explain"><b id="pTitle">Trạng thái ban đầu</b><span id="pDesc">Đẩy pít-tông vào làm khí bị nén: khí nhận công, nội năng tăng. Cấp nhiệt cho khí cũng làm nội năng tăng. Có thể kết hợp cả hai quá trình.</span></div></div>
+<aside class="panel"><div class="ph"><h2>Bảng điều khiển</h2><span class="tag">TÙY CHỈNH QUÁ TRÌNH</span></div><div class="controls">
+<div class="control"><label for="pistonPos">Vị trí pít-tông <output id="pPosO">50%</output></label><input id="pistonPos" type="range" min="20" max="80" value="50"></div>
+<div class="control"><label for="pistonHeat">Nhiệt lượng khí nhận Q <output id="pHeatO">0 J</output></label><input id="pistonHeat" type="range" min="-500" max="500" step="25" value="0"></div>
+<div class="btnrow"><button class="btn" id="pCompress">⬅ Nén khí</button><button class="btn secondary" id="pExpand">➡ Giãn khí</button><button class="btn secondary" id="pReset">↺ Đặt lại</button></div>
+<div class="readouts"><div class="readout"><small>Công A khí nhận</small><strong id="pWork">0 J</strong></div><div class="readout"><small>Độ biến thiên nội năng ΔU</small><strong id="pDelta">0 J</strong></div></div>
+<div class="section" style="padding:18px 0 0;border:0"><h3>Thử nghiệm</h3><ul><li>Kéo trực tiếp tay cầm trên hình pít-tông sang trái để nén khí (khí nhận công).</li><li>Kéo pít-tông sang phải để khí giãn nở (khí thực hiện công).</li><li>Điều chỉnh Q dương hoặc âm để mô phỏng nhận hoặc truyền nhiệt.</li></ul><div class="eq">ΔU = A + Q</div><div class="note">Quy ước theo SGK: A &gt; 0 khi vật nhận công; A &lt; 0 khi vật thực hiện công. Q &gt; 0 khi vật nhận nhiệt; Q &lt; 0 khi vật truyền nhiệt. Nhiệt độ được suy ra từ ΔU theo mô hình khí lí tưởng đơn giản; công A được quy đổi tuyến tính theo độ dịch chuyển pít-tông, không phải phép tính công chính xác từ đồ thị p–V.</div></div></div></aside></div></section>
+
+<section id="joule" class="exp hidden"><div class="grid">
+<div class="panel"><div class="ph"><h2>Thí nghiệm Joule – công làm nước nóng lên</h2><span class="tag">CHUYỂN HÓA NĂNG LƯỢNG</span></div><div class="stage"><canvas id="jouleC" width="1000" height="550"></canvas></div>
+<div class="stats"><div class="stat"><span>Nhiệt độ nước</span><strong class="cyan" id="jTemp">25,0 °C</strong></div><div class="stat"><span>Công vật nặng truyền</span><strong id="jWork">0 J</strong></div><div class="stat"><span>Nội năng nước tăng</span><strong id="jU">0 J</strong></div></div><div class="explain"><b id="jTitle">Hệ đang đứng yên</b><span id="jDesc">Vật nặng rơi làm quay cánh khuấy trong nước. Công cơ học truyền cho nước làm nội năng của nước tăng, thể hiện qua nhiệt độ tăng. Trong mô hình cách nhiệt, Q = 0 nên ΔU = A.</span></div></div>
+<aside class="panel"><div class="ph"><h2>Bảng điều khiển</h2><span class="tag">THÍ NGHIỆM</span></div><div class="controls">
+<div class="control"><label for="jMass">Khối lượng vật nặng <output id="jMassO">2,0 kg</output></label><input id="jMass" type="range" min="0.5" max="5" step=".5" value="2"></div>
+<div class="control"><label for="jHeight">Độ cao rơi <output id="jHeightO">1,0 m</output></label><input id="jHeight" type="range" min=".2" max="2" step=".1" value="1"></div>
+<div class="control"><label for="jWater">Khối lượng nước <output id="jWaterO">0,50 kg</output></label><input id="jWater" type="range" min=".2" max="1" step=".1" value=".5"></div>
+<div class="btnrow"><button class="btn" id="jRun">▶ Thả vật nặng</button><button class="btn secondary" id="jReset">↺ Làm lại</button></div>
+<div class="readouts"><div class="readout"><small>Công cơ học mgh</small><strong id="jA">0 J</strong></div><div class="readout"><small>Nhiệt lượng trao đổi Q (giả sử cách nhiệt)</small><strong id="jQ">0 J</strong></div></div>
+<div class="section" style="padding:18px 0 0;border:0"><h3>Nhiệm vụ khám phá</h3><ul><li>Kéo trực tiếp vật nặng trên hình lên cao rồi thả chuột để vật rơi.</li><li>Quan sát cánh khuấy, nhiệt kế và nhiệt độ nước.</li><li>Tăng khối lượng nước để so sánh độ tăng nhiệt độ.</li></ul><div class="note">Mô hình lí tưởng giả sử toàn bộ thế năng trọng trường mgh chuyển thành công cơ học truyền cho nước, làm nội năng nước tăng; bình cách nhiệt nên Q = 0 và ΔU = A. Bỏ qua hao phí, nhiệt dung của cánh khuấy/bình và nhiệt truyền ra môi trường. Lấy g = 9,8 m/s² và c nước = 4200 J/(kg·K).</div></div></div></aside></div></section>
+
+<section id="law" class="exp hidden"><div class="grid">
+<div class="panel"><div class="ph"><h2>Khám phá định luật I của nhiệt động lực học</h2><span class="tag">MÔ HÌNH NĂNG LƯỢNG</span></div><div class="stage"><canvas id="lawC" width="1000" height="550"></canvas></div>
+<div class="stats"><div class="stat"><span>Công A</span><strong id="lA">+200 J</strong></div><div class="stat"><span>Nhiệt lượng Q</span><strong id="lQ">+300 J</strong></div><div class="stat"><span>ΔU = A + Q</span><strong class="cyan" id="lU">+500 J</strong></div></div><div class="explain"><b id="lTitle">Hệ nhận công và nhận nhiệt</b><span id="lDesc">Tổng năng lượng hệ nhận được là 500 J, nên nội năng tăng 500 J trong mô hình.</span></div></div>
+<aside class="panel"><div class="ph"><h2>Bảng điều khiển năng lượng</h2><span class="tag">ĐỔI DẤU A, Q</span></div><div class="controls">
+<div class="control"><label for="lawA">Công A <output id="lawAO">+200 J · Nhận công</output></label><input id="lawA" type="range" min="-500" max="500" step="50" value="200"></div>
+<div class="control"><label for="lawQ">Nhiệt lượng Q <output id="lawQO">+300 J · Nhận nhiệt</output></label><input id="lawQ" type="range" min="-500" max="500" step="50" value="300"></div>
+<div class="btnrow"><button class="btn secondary" data-preset="heat">Chỉ truyền nhiệt</button><button class="btn secondary" data-preset="work">Chỉ thực hiện công</button><button class="btn secondary" data-preset="both">Cả hai</button><button class="btn secondary" data-preset="opposite">Ngược chiều</button></div>
+<div class="section" style="padding:18px 0 0;border:0"><div class="eq">ΔU = A + Q</div><h3>Quy ước dấu</h3><p><span class="badge">A &gt; 0</span> Vật nhận công. <span class="badge">A &lt; 0</span> Vật thực hiện công.</p><p><span class="badge">Q &gt; 0</span> Vật nhận nhiệt. <span class="badge">Q &lt; 0</span> Vật truyền nhiệt.</p><div class="note">Thay đổi hai thanh trượt và giải thích vì sao ΔU tăng, giảm hoặc không đổi. Nhiệt lượng không phải năng lượng chứa sẵn trong vật; Q là năng lượng truyền trong quá trình truyền nhiệt.</div></div></div></aside></div></section>
+</main><footer>PHÒNG THÍ NGHIỆM ẢO VẬT LÍ 12 · BÀI 2 · Mô hình tương tác phục vụ dạy học</footer>
+<script>
+const $=id=>document.getElementById(id);document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.exp').forEach(x=>x.classList.toggle('hidden',x.id!==b.dataset.id))});
+$('guide').onclick=()=>alert('Chọn thí nghiệm ở các tab. Điều chỉnh thanh trượt hoặc dùng các nút thao tác. Các số liệu được cập nhật theo mô hình; đọc phần ghi chú để biết giả thiết và giới hạn.');
+let snd=false;$('sound').onclick=()=>{snd=!snd;$('sound').textContent=snd?'🔊 Âm thanh':'🔇 Âm thanh'};
+function C(id){let c=$(id);return {c,x:c.getContext('2d'),w:c.width,h:c.height}}function bg(x,w,h){x.fillStyle='#0d1729';x.fillRect(0,0,w,h);x.strokeStyle='#17263c';for(let i=0;i<w;i+=50){x.beginPath();x.moveTo(i,0);x.lineTo(i,h);x.stroke()}for(let j=0;j<h;j+=50){x.beginPath();x.moveTo(0,j);x.lineTo(w,j);x.stroke()}}function text(x,s,a,b,z=17,col='#dce8f8',wt=600){x.fillStyle=col;x.font=`${wt} ${z}px Segoe UI,Arial`;x.fillText(s,a,b)}
+// Tube: constant-volume ideal-gas qualitative model, stopper pops when pressure reaches threshold.
+let tc=C('tubeC'),tRun=false,tNow=20,tAnim,gas=[];function initGas(){gas=[];for(let i=0;i<48;i++)gas.push({x:180+Math.random()*540,y:160+Math.random()*240,vx:Math.random()*2-1,vy:Math.random()*2-1})}
+function drawTube(){
+ if(tRun&&tNow<180){tNow=Math.min(180,tNow+0.10);$('tHeat').value=Math.round(tNow);updTube()}
+ let {x,w,h}=tc;bg(x,w,h);
+ // Soft illuminated laboratory bench
+ let bench=x.createLinearGradient(0,455,0,550);bench.addColorStop(0,'#233a53');bench.addColorStop(1,'#101b2c');x.fillStyle=bench;x.fillRect(0,455,w,95);
+ // Glass test tube: rounded bottom, rim and specular highlights
+ x.save();x.shadowColor='#36c9ef55';x.shadowBlur=24;
+ let glass=x.createLinearGradient(115,0,830,0);glass.addColorStop(0,'#789dbb22');glass.addColorStop(.18,'#bcecff12');glass.addColorStop(.5,'#54a8d622');glass.addColorStop(.82,'#d7f5ff16');glass.addColorStop(1,'#6aa4c322');
+ x.fillStyle=glass;x.strokeStyle='#a8d9ed';x.lineWidth=5;x.beginPath();x.moveTo(125,125);x.lineTo(125,397);x.quadraticCurveTo(125,438,166,438);x.lineTo(780,438);x.quadraticCurveTo(820,438,820,397);x.lineTo(820,125);x.stroke();x.fillStyle='#2679a044';x.fill();x.restore();
+ // Gas volume
+ let gasGrad=x.createLinearGradient(0,260,0,435);gasGrad.addColorStop(0,'#1c6c9844');gasGrad.addColorStop(1,'#3bb8d944');x.fillStyle=gasGrad;x.fillRect(132,260,680,174);
+ // Molecular glow and particles
+ gas.forEach(p=>{if(tRun){let v=Math.sqrt((tNow+273.15)/(20+273.15));p.x+=p.vx*v;p.y+=p.vy*v;if(p.x<140||p.x>810)p.vx*=-1;if(p.y<270||p.y>415)p.vy*=-1}
+  x.beginPath();x.arc(p.x,p.y,8,0,7);let g=x.createRadialGradient(p.x-2,p.y-2,1,p.x,p.y,8);g.addColorStop(0,'#e5fbff');g.addColorStop(.35,'#55d8f5');g.addColorStop(1,'#0876b8');x.fillStyle=g;x.shadowColor='#29c8ff99';x.shadowBlur=9;x.fill();x.shadowBlur=0});
+ // Tube rim and reflections
+ x.strokeStyle='#d6f4ff';x.lineWidth=7;x.beginPath();x.moveTo(112,125);x.lineTo(833,125);x.stroke();x.strokeStyle='#ffffff88';x.lineWidth=2;x.beginPath();x.moveTo(139,145);x.lineTo(139,390);x.stroke();x.beginPath();x.moveTo(805,150);x.lineTo(805,380);x.stroke();
+ // Cork with textured bands
+ let threshold=[1.25,1.40,1.52][+$('tStopper').value-1],pressure=(tNow+273.15)/293.15,popped=pressure>=threshold,off=popped?105:0,up=popped?60:0;
+ let cork=x.createLinearGradient(0,110,0,165);cork.addColorStop(0,'#e3c39a');cork.addColorStop(.5,'#a9794e');cork.addColorStop(1,'#68452f');x.fillStyle=cork;x.strokeStyle='#f0d0a7';x.lineWidth=2;x.beginPath();x.roundRect(785+off,105-up,75,48,8);x.fill();x.stroke();
+ for(let k=0;k<4;k++){x.strokeStyle='#f3d8b488';x.beginPath();x.moveTo(795+off+k*15,112-up);x.lineTo(795+off+k*15,146-up);x.stroke()}
+ if(popped){x.strokeStyle='#ffbd62';x.lineWidth=3;x.setLineDash([7,6]);x.beginPath();x.moveTo(825,128);x.lineTo(900,74);x.stroke();x.setLineDash([]);text(x,'NÚT BẤC BẬT RA',790,48,17,'#ffbd62',800)}
+ // Burner and flame
+ let burner=x.createLinearGradient(0,450,0,520);burner.addColorStop(0,'#8fa6bd');burner.addColorStop(.4,'#344b63');burner.addColorStop(1,'#17263a');x.fillStyle=burner;x.beginPath();x.roundRect(380,480,120,38,9);x.fill();x.fillStyle='#c6d8e8';x.fillRect(400,474,80,9);
+ let flame=x.createRadialGradient(440,440,4,440,450,52);flame.addColorStop(0,'#fff4a5');flame.addColorStop(.35,'#ffb23e');flame.addColorStop(1,'#ed5b1b00');x.fillStyle=flame;x.beginPath();x.ellipse(440,445,42,62,0,0,Math.PI*2);x.fill();
+ x.fillStyle='#ffe17b';x.beginPath();x.moveTo(440,485);x.bezierCurveTo(405,455,435,430,443,405);x.bezierCurveTo(477,445,470,465,440,485);x.fill();
+ text(x,'ỐNG NGHIỆM CHỨA KHÔNG KHÍ',150,82,16,'#b9d9ed',800);text(x,'ĐÈN CỒN',390,540,13,'#ffc36a',700);
+ tAnim=requestAnimationFrame(drawTube)}
+function updTube(){let pressure=(tNow+273.15)/293.15;$('tTemp').textContent=tNow.toFixed(0)+' °C';$('tHeatO').textContent=tNow.toFixed(0)+' °C';$('tPress').textContent=pressure.toFixed(2)+' atm';$('tEnergy').textContent=pressure.toFixed(2);let pop=pressure>=[1.25,1.40,1.52][+$('tStopper').value-1];$('tTitle').textContent=pop?'Nút bấc bật ra':'Khí đang được đun nóng';$('tDesc').textContent=pop?'Áp suất khí đã vượt ngưỡng giữ giả định. Nút bấc bị đẩy ra do khí bên trong tác dụng lực lên nút.':'Khí nhận nhiệt, nhiệt độ và động năng trung bình của phân tử tăng. Ở thể tích gần như không đổi, áp suất khí tăng.'}
+$('tHeat').oninput=e=>{tNow=+e.target.value;updTube()};$('tStopper').oninput=e=>{$('tStopperO').textContent=['Yếu','Trung bình','Chắc'][e.target.value-1];updTube()};$('tRun').onclick=()=>{tRun=!tRun;$('tRun').textContent=tRun?'Ⅱ Tạm dừng':'▶ Tiếp tục đun'};$('tReset').onclick=()=>{tRun=false;tNow=20;$('tHeat').value=20;$('tStopper').value=2;$('tStopperO').textContent='Trung bình';$('tRun').textContent='▶ Bắt đầu đun';initGas();updTube()};initGas();updTube();drawTube();
+// Piston energy accounting. A is work received by gas. For compression A positive; expansion A negative. Temperature proxy proportional to U.
+let pc=C('pistonC'),pos=50,Q=0,A=0,baseU=1200;function pistonUpdate(){let vol=pos/50;let dU=A+Q,T=300*(1+dU/baseU);T=Math.max(80,T);$('pPosO').textContent=pos+'%';$('pHeatO').textContent=Q+' J';$('pWork').textContent=(A>0?'+':'')+A+' J';$('pDelta').textContent=(dU>0?'+':'')+dU+' J';$('pTemp').textContent=T.toFixed(0)+' K';$('pVol').textContent=vol.toFixed(2);$('pU').textContent=(1+dU/baseU).toFixed(2);$('pTitle').textContent=A>0&&Q>0?'Khí nhận công và nhận nhiệt':A>0?'Khí nhận công':A<0&&Q<0?'Khí thực hiện công và truyền nhiệt':A<0?'Khí giãn nở, thực hiện công':Q>0?'Khí nhận nhiệt':Q<0?'Khí truyền nhiệt':'Trạng thái ban đầu';$('pDesc').textContent=`Theo quy ước SGK: A = ${A} J, Q = ${Q} J nên ΔU = ${dU} J. ${dU>0?'Nội năng tăng.':dU<0?'Nội năng giảm.':'Nội năng không đổi.'}`}
+function drawPiston(){
+ let {x,w,h}=pc;bg(x,w,h);
+ // metallic cylinder body
+ let left=150,right=850,top=150,bottom=400,pX=left+(pos/100)*(right-left);
+ let metal=x.createLinearGradient(0,top,0,bottom);metal.addColorStop(0,'#a9bfd2');metal.addColorStop(.12,'#425b76');metal.addColorStop(.5,'#243e59');metal.addColorStop(.88,'#58738d');metal.addColorStop(1,'#b2c5d6');
+ x.fillStyle=metal;x.beginPath();x.roundRect(left-12,top-10,right-left+24,bottom-top+20,18);x.fill();
+ let gasGrad=x.createLinearGradient(left,top,pX,bottom);gasGrad.addColorStop(0,'#0a2942');gasGrad.addColorStop(.5,'#145b80');gasGrad.addColorStop(1,'#247fa5');x.fillStyle=gasGrad;x.fillRect(left+8,top+8,Math.max(5,pX-left-18),bottom-top-16);
+ // subtle gas glow
+ x.fillStyle='#4bd5f022';x.fillRect(left+8,top+8,Math.max(5,pX-left-18),bottom-top-16);
+ // particles in gas chamber
+ for(let i=0;i<44;i++){let span=Math.max(20,pX-left-55),px=left+25+(i*73+performance.now()/80)%span,py=top+30+(i*47)%190;x.beginPath();x.arc(px,py,5.5,0,7);let gg=x.createRadialGradient(px-2,py-2,1,px,py,6);gg.addColorStop(0,'#e5fcff');gg.addColorStop(1,'#28b9e6');x.fillStyle=gg;x.shadowColor='#42dfff99';x.shadowBlur=8;x.fill();x.shadowBlur=0}
+ // piston head, shaft, handle
+ let piston=x.createLinearGradient(pX-15,0,pX+15,0);piston.addColorStop(0,'#536d88');piston.addColorStop(.35,'#e3edf5');piston.addColorStop(.7,'#8098ae');piston.addColorStop(1,'#344d68');x.fillStyle=piston;x.beginPath();x.roundRect(pX-15,top-18,30,bottom-top+36,5);x.fill();x.strokeStyle='#e4f1fa';x.lineWidth=2;x.stroke();
+ x.fillStyle='#a9bfd2';x.fillRect(pX-6,top-110,12,95);x.fillStyle='#d9e5ef';x.beginPath();x.roundRect(pX-65,top-122,130,20,8);x.fill();x.strokeStyle='#708aa4';x.stroke();
+ // cylinder end cap and bolts
+ x.fillStyle='#91a8be';x.beginPath();x.ellipse(left,275,17,132,0,0,7);x.fill();for(let yy of [top+25,bottom-25]){x.beginPath();x.arc(left,yy,5,0,7);x.fillStyle='#dceaf4';x.fill()}
+ // heat-flow indicator
+ if(Q!==0){let col=Q>0?'#f3a44a':'#67b5e8';x.strokeStyle=col;x.fillStyle=col;x.lineWidth=7;x.beginPath();x.moveTo(500,480);x.lineTo(500,430);x.stroke();x.beginPath();x.moveTo(488,444);x.lineTo(500,427);x.lineTo(512,444);x.fill();text(x,Q>0?'NHIỆT TRUYỀN VÀO KHÍ':'NHIỆT TRUYỀN RA NGOÀI',535,475,14,col,800)}
+ text(x,'XI LANH – PÍT-TÔNG',160,85,17,'#b9d0e8',800);text(x,'KÉO TAY CẦM ĐỂ NÉN / GIÃN KHÍ',160,510,15,'#8eaecb',700);
+ requestAnimationFrame(drawPiston)}
+$('pistonPos').oninput=e=>{let next=+e.target.value;let delta=pos-next;A+=Math.round(delta*8);pos=next;pistonUpdate()};$('pistonHeat').oninput=e=>{Q=+e.target.value;pistonUpdate()};$('pCompress').onclick=()=>{pos=Math.max(20,pos-10);A+=80;$('pistonPos').value=pos;pistonUpdate()};$('pExpand').onclick=()=>{pos=Math.min(80,pos+10);A-=80;$('pistonPos').value=pos;pistonUpdate()};$('pReset').onclick=()=>{pos=50;A=0;Q=0;$('pistonPos').value=50;$('pistonHeat').value=0;pistonUpdate()};pistonUpdate();drawPiston();
+// Joule paddle wheel. Potential energy mgh; idealized conversion to water internal energy.
+let jc=C('jouleC'),jProgress=0,jRunning=false,jTemp=25,jRAF;function jVals(){let m=+$('jMass').value,h=+$('jHeight').value,mw=+$('jWater').value,W=m*9.8*h,Q=W,dT=Q/(mw*4200);return {m,h,mw,W,T:25+dT}}
+function jUpdate(){let v=jVals();$('jMassO').textContent=v.m.toFixed(1)+' kg';$('jHeightO').textContent=v.h.toFixed(1)+' m';$('jWaterO').textContent=v.mw.toFixed(2)+' kg';let done=jProgress>=1,W=v.W*jProgress,Q=0,deltaU=W;jTemp=25+deltaU/(v.mw*4200);$('jTemp').textContent=jTemp.toFixed(2).replace('.',',')+' °C';$('jWork').textContent=W.toFixed(1)+' J';$('jU').textContent=deltaU.toFixed(1)+' J';$('jA').textContent=W.toFixed(1)+' J';$('jQ').textContent=Q.toFixed(1)+' J';$('jTitle').textContent=done?'Vật nặng đã rơi hết độ cao':'Công cơ học làm cánh khuấy quay';$('jDesc').textContent=`Thế năng giảm ${W.toFixed(1)} J; theo giả thiết lí tưởng, nước nhận công A = ${W.toFixed(1)} J; giả sử cách nhiệt nên Q = 0 và ΔU = A = ${deltaU.toFixed(1)} J. Nhiệt độ tăng ${((jTemp-25)).toFixed(3)} °C.`}
+function drawJoule(){
+ let {x,w,h}=jc;bg(x,w,h);
+ // laboratory table
+ let table=x.createLinearGradient(0,455,0,550);table.addColorStop(0,'#526a83');table.addColorStop(.2,'#263c55');table.addColorStop(1,'#111d2d');x.fillStyle=table;x.fillRect(0,475,w,75);
+ // insulated calorimeter shell
+ let shell=x.createLinearGradient(300,0,750,0);shell.addColorStop(0,'#9eb4c7');shell.addColorStop(.12,'#314a65');shell.addColorStop(.5,'#172b43');shell.addColorStop(.88,'#536d86');shell.addColorStop(1,'#b5c8d8');
+ x.fillStyle=shell;x.beginPath();x.roundRect(300,245,450,220,22);x.fill();x.strokeStyle='#c8d8e6';x.lineWidth=3;x.stroke();
+ // water
+ let water=x.createLinearGradient(0,300,0,450);water.addColorStop(0,'#56c4e7aa');water.addColorStop(.35,'#1679a8');water.addColorStop(1,'#0d456b');x.fillStyle=water;x.beginPath();x.roundRect(315,300,420,150,12);x.fill();
+ // water ripples
+ for(let i=0;i<5;i++){x.strokeStyle='#a7edff55';x.lineWidth=2;x.beginPath();x.ellipse(525,325+i*22,90+i*18,7,0,0,Math.PI*2);x.stroke()}
+ // central shaft and paddle wheel with animation
+ x.strokeStyle='#d5e3ee';x.lineWidth=10;x.beginPath();x.moveTo(525,90);x.lineTo(525,390);x.stroke();
+ x.save();x.translate(525,385);x.rotate(jProgress*Math.PI*12);for(let i=0;i<4;i++){x.rotate(Math.PI/2);let blade=x.createLinearGradient(0,-9,0,9);blade.addColorStop(0,'#f0f6fa');blade.addColorStop(.5,'#829db5');blade.addColorStop(1,'#405b76');x.fillStyle=blade;x.beginPath();x.roundRect(0,-9,105,18,5);x.fill();x.strokeStyle='#d5e6f2';x.stroke()}x.restore();
+ // pulley wheel
+ x.beginPath();x.arc(525,95,38,0,7);let wheel=x.createRadialGradient(510,80,4,525,95,40);wheel.addColorStop(0,'#d5e4ef');wheel.addColorStop(.25,'#647e99');wheel.addColorStop(.7,'#263e59');wheel.addColorStop(1,'#9db2c5');x.fillStyle=wheel;x.fill();x.strokeStyle='#c7d9e8';x.lineWidth=3;x.stroke();x.beginPath();x.arc(525,95,8,0,7);x.fillStyle='#dbe8f2';x.fill();
+ // rope and hanging mass
+ x.strokeStyle='#d2b58e';x.lineWidth=4;x.beginPath();x.moveTo(562,95);x.lineTo(765,95);x.lineTo(765,100+220*jProgress);x.stroke();
+ let my=100+220*jProgress,weight=x.createLinearGradient(720,my,800,my+75);weight.addColorStop(0,'#e7c28d');weight.addColorStop(.5,'#986b42');weight.addColorStop(1,'#563d2c');x.fillStyle=weight;x.beginPath();x.roundRect(728,my,74,75,8);x.fill();x.strokeStyle='#e6c99f';x.lineWidth=2;x.stroke();
+ // thermometer
+ x.strokeStyle='#a9bdcf';x.lineWidth=13;x.beginPath();x.moveTo(850,285);x.lineTo(850,420);x.stroke();x.beginPath();x.arc(850,432,19,0,7);x.fillStyle='#ef6670';x.fill();x.strokeStyle='#ff7c83';x.lineWidth=6;x.beginPath();x.moveTo(850,425);x.lineTo(850,Math.max(300,425-(jTemp-25)*32));x.stroke();
+ // labels and highlights
+ text(x,'NHIỆT LƯỢNG KẾ CÁCH NHIỆT',330,220,16,'#b9d0e8',800);text(x,'VẬT NẶNG',720,78,13,'#f1c995',800);text(x,'CÁNH KHUẤY',560,430,13,'#e3eff8',700);text(x,'NƯỚC',335,330,13,'#d7f6ff',700);
+ requestAnimationFrame(drawJoule)}
+$('jMass').oninput=jUpdate;$('jHeight').oninput=jUpdate;$('jWater').oninput=jUpdate;$('jRun').onclick=()=>{if(jProgress>=1)jProgress=0;jRunning=!jRunning;$('jRun').textContent=jRunning?'Ⅱ Tạm dừng':'▶ Tiếp tục thả'};$('jReset').onclick=()=>{jRunning=false;jProgress=0;$('jRun').textContent='▶ Thả vật nặng';jUpdate()};function jTick(){if(jRunning){jProgress=Math.min(1,jProgress+.008);if(jProgress>=1){jRunning=false;$('jRun').textContent='▶ Thả lại'}jUpdate()}setTimeout(jTick,40)}jUpdate();drawJoule();jTick();
+// First law sign explorer
+let lc=C('lawC');function lawUpdate(){let A=+$('lawA').value,Q=+$('lawQ').value,U=A+Q;let fmt=v=>(v>0?'+':'')+v+' J';$('lawAO').textContent=fmt(A)+(A>0?' · Nhận công':A<0?' · Thực hiện công':' · Không có công');$('lawQO').textContent=fmt(Q)+(Q>0?' · Nhận nhiệt':Q<0?' · Truyền nhiệt':' · Không truyền nhiệt');$('lA').textContent=fmt(A);$('lQ').textContent=fmt(Q);$('lU').textContent=fmt(U);$('lTitle').textContent=U>0?'Nội năng tăng':U<0?'Nội năng giảm':'Nội năng không đổi';$('lDesc').textContent=`ΔU = A + Q = ${A} + (${Q}) = ${U} J. ${U>0?'Vật nhận năng lượng tổng cộng.':U<0?'Vật truyền năng lượng tổng cộng ra ngoài.':'Năng lượng nhận và truyền cân bằng nhau.'}`}
+function drawLaw(){let {x,w,h}=lc;bg(x,w,h);let A=+$('lawA').value,Q=+$('lawQ').value,U=A+Q;let cx=500,cy=280;x.fillStyle='#173c59';x.beginPath();x.roundRect(350,190,300,180,18);x.fill();x.strokeStyle='#5c7896';x.lineWidth=3;x.stroke();text(x,'HỆ / VẬT ĐANG XÉT',395,280,20,'#e4f1ff',800);text(x,'NỘI NĂNG U',425,320,16,'#74e7f3',700);
+ function arrow(x1,y1,x2,y2,color,label){x.strokeStyle=color;x.fillStyle=color;x.lineWidth=7;x.beginPath();x.moveTo(x1,y1);x.lineTo(x2,y2);x.stroke();let a=Math.atan2(y2-y1,x2-x1);x.beginPath();x.moveTo(x2,y2);x.lineTo(x2-18*Math.cos(a-.5),y2-18*Math.sin(a-.5));x.lineTo(x2-18*Math.cos(a+.5),y2-18*Math.sin(a+.5));x.fill();text(x,label,x1-20,y1-15,15,color,800)}
+ if(A>0)arrow(90,245,330,245,'#37b9ef','A nhận công');else if(A<0)arrow(330,245,90,245,'#37b9ef','A thực hiện');
+ if(Q>0)arrow(670,245,910,245,'#f3a94d','Q nhận nhiệt');else if(Q<0)arrow(910,245,670,245,'#f3a94d','Q truyền ra');
+ text(x,'ΔU = '+(U>0?'+':'')+U+' J',390,445,24,'#68e8ef',800);text(x,U>0?'NỘI NĂNG TĂNG':U<0?'NỘI NĂNG GIẢM':'NỘI NĂNG KHÔNG ĐỔI',390,480,17,'#dce8f8',800);requestAnimationFrame(drawLaw)}
+$('lawA').oninput=lawUpdate;$('lawQ').oninput=lawUpdate;document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{let p=b.dataset.preset;if(p==='heat'){ $('lawA').value=0;$('lawQ').value=300}else if(p==='work'){$('lawA').value=300;$('lawQ').value=0}else if(p==='both'){$('lawA').value=200;$('lawQ').value=300}else{$('lawA').value=300;$('lawQ').value=-300}lawUpdate()});lawUpdate();drawLaw();
+
+// ===== TƯƠNG TÁC TRỰC TIẾP VỚI THIẾT BỊ TRONG VÙNG MÔ PHỎNG (V2) =====
+function canvasPoint(ev, canvas){
+ const r=canvas.getBoundingClientRect();
+ return {x:(ev.clientX-r.left)*canvas.width/r.width,y:(ev.clientY-r.top)*canvas.height/r.height};
+}
+function enableDeviceInteraction(canvas, handlers){
+ canvas.style.touchAction='none';
+ canvas.style.cursor='grab';
+ let activeDrag=false;
+ canvas.addEventListener('pointerdown',ev=>{
+   const p=canvasPoint(ev,canvas);
+   if(handlers.hit(p)){
+     activeDrag=true;
+     canvas.setPointerCapture(ev.pointerId);
+     canvas.style.cursor='grabbing';
+     handlers.start?.(p);
+     ev.preventDefault();
+   }
+ });
+ canvas.addEventListener('pointermove',ev=>{
+   if(!activeDrag)return;
+   handlers.move?.(canvasPoint(ev,canvas));
+   ev.preventDefault();
+ });
+ const finish=ev=>{
+   if(!activeDrag)return;
+   activeDrag=false;
+   canvas.style.cursor='grab';
+   handlers.end?.(ev);
+ };
+ canvas.addEventListener('pointerup',finish);
+ canvas.addEventListener('pointercancel',finish);
+}
+// 1) Ống nghiệm: nhấn trực tiếp vào đèn cồn để bắt đầu/tạm dừng đun;
+// kéo nút bấc để thay đổi vị trí trực quan, thả ra thì mô hình xác định trạng thái theo ngưỡng.
+enableDeviceInteraction(tc.c,{
+ hit:p=>((p.x>350&&p.x<535&&p.y>390&&p.y<545) ||
+         (p.x>770&&p.x<900&&p.y>85&&p.y<180)),
+ start:p=>{
+   if(p.x<600){
+     tRun=!tRun;
+     $('tRun').textContent=tRun?'Ⅱ Tạm dừng':'▶ Tiếp tục đun';
+   }
+ }
+});
+// 2) Xi lanh: kéo trực tiếp tay cầm pít-tông. Vị trí kéo cập nhật cả thanh trượt,
+// công A và các đại lượng suy ra của mô hình.
+let pistonCanvasDragging=false;
+enableDeviceInteraction(pc.c,{
+ hit:p=>{
+   const px=150+(pos/100)*700;
+   return p.y>15&&p.y<150&&Math.abs(p.x-px)<90;
+ },
+ move:p=>{
+   const next=Math.max(20,Math.min(80,Math.round((p.x-150)/700*100)));
+   const delta=pos-next;
+   if(delta!==0){
+     A+=Math.round(delta*8);
+     pos=next;
+     $('pistonPos').value=pos;
+     pistonUpdate();
+   }
+ }
+});
+// 3) Joule: kéo trực tiếp vật nặng lên/xuống; khi thả, vật rơi và làm quay cánh khuấy.
+enableDeviceInteraction(jc.c,{
+ hit:p=>{
+   const my=100+220*jProgress;
+   return p.x>=710&&p.x<=820&&p.y>=my-12&&p.y<=my+90;
+ },
+ start:()=>{
+   jRunning=false;
+   $('jRun').textContent='▶ Thả vật nặng';
+ },
+ move:p=>{
+   jProgress=Math.max(0,Math.min(1,(p.y-100-35)/220));
+   jUpdate();
+ },
+ end:()=>{
+   if(jProgress<1){
+     jRunning=true;
+     $('jRun').textContent='Ⅱ Tạm dừng';
+   }
+ }
+});
+
+</script></body></html>

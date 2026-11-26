@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phòng thí nghiệm ảo Vật lí 12 – Bài 1</title>
+<style>
+:root{--bg:#080e19;--panel:#111a2b;--panel2:#0d1626;--line:#26344b;--text:#edf4ff;--muted:#91a2bc;--cyan:#00c5df;--blue:#3187ff;--green:#28d49a;--yellow:#f3ca42;--red:#ff5964;--shadow:0 12px 35px #0005}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% 0%,#10283a 0,transparent 34%),radial-gradient(ellipse at 100% 100%,#251a2c 0,transparent 32%),var(--bg);color:var(--text);font:15px/1.45 Inter,Segoe UI,Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#0b1322ed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:15px clamp(14px,3vw,42px)}
+.head{max-width:1600px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.brand small{color:var(--cyan);font-weight:800;letter-spacing:1.5px;font-size:11px}.brand h1{font-size:clamp(18px,2.3vw,27px);margin:2px 0 0;letter-spacing:.2px}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}
+.top-actions{display:flex;gap:8px;align-items:center}.pill{border:1px solid var(--line);background:#18243a;color:var(--text);border-radius:24px;padding:9px 15px;font-weight:700;cursor:pointer}.pill.active{background:linear-gradient(100deg,#00aeca,#087eae);border-color:transparent}
+main{max-width:1600px;margin:auto;padding:22px clamp(12px,2.8vw,40px) 40px}
+.tabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:17px}.tab{background:#111b2d;border:1px solid var(--line);color:#aebdd2;border-radius:11px;padding:11px 17px;font-weight:750;cursor:pointer}.tab.active{background:#073b53;border-color:#00b9d6;color:#eaffff;box-shadow:0 0 0 1px #00b9d633 inset}
+.grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,.95fr);gap:18px}.panel{background:linear-gradient(145deg,#141e31,#101827);border:1px solid #26354b;border-radius:17px;box-shadow:var(--shadow);overflow:hidden;min-width:0}.panelhead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:17px 19px;border-bottom:1px solid var(--line)}.panelhead h2{margin:0;font-size:17px}.tag{font-size:10px;letter-spacing:.8px;color:#66e4f0;background:#063849;border:1px solid #07566b;border-radius:20px;padding:5px 9px;font-weight:800;white-space:nowrap}
+.stage{padding:14px;background:#0b1424}.stage canvas{display:block;width:100%;height:430px;border:1px solid #24324a;border-radius:12px;background:#0d1729;touch-action:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px 14px}.stat{background:#101a2b;border:1px solid #202e44;border-radius:11px;padding:10px;text-align:center}.stat span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.6px}.stat strong{display:block;font-size:20px;margin-top:3px;font-variant-numeric:tabular-nums}.stat strong.cyan{color:var(--cyan)}
+.explain{margin:0 14px 15px;border:1px solid #15364c;border-left:4px solid var(--cyan);background:#0d1c2c;padding:12px 14px;border-radius:9px;color:#d8e6f8;font-size:13px}.explain b{color:var(--cyan);display:block;margin-bottom:4px}
+.controls{padding:17px 19px}.control{margin-bottom:17px}.control label{display:flex;justify-content:space-between;gap:12px;color:#aebdd2;font-size:13px;margin-bottom:7px}.control output{color:#f2f7ff;font-weight:800;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--cyan);cursor:pointer}
+select{width:100%;background:#0b1525;border:1px solid #30415c;border-radius:9px;color:var(--text);padding:10px}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap}.btn{background:linear-gradient(100deg,#087fbd,#075d9b);border:1px solid #0a8bc4;color:white;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}.btn.secondary{background:#202b3e;border-color:#35445c;color:#e1eaf7}.btn:disabled{opacity:.5;cursor:not-allowed}
+.readouts{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:15px}.readout{background:#0d1728;border:1px solid #26354b;border-radius:10px;padding:10px}.readout small{display:block;color:var(--muted);font-size:11px}.readout strong{display:block;margin-top:3px;font-size:16px;font-variant-numeric:tabular-nums}
+.right-section{padding:16px 18px;border-bottom:1px solid var(--line)}.right-section:last-child{border-bottom:0}.right-section h3{font-size:15px;margin:0 0 9px}.right-section p,.right-section li{color:#aebdd2;font-size:13px;line-height:1.55}.right-section ul{padding-left:19px;margin:7px 0}.graph{display:block;width:100%;height:210px;background:#0b1424;border:1px solid #26354b;border-radius:11px}.graph-legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:11px;margin-top:8px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.note{background:#10273a;border:1px solid #174762;border-radius:9px;padding:10px 11px;color:#b8d6e9;font-size:12px;margin-top:11px}
+.hidden{display:none!important}.graph-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.graph-title h3{margin:0}.mini{font-size:11px;color:var(--muted)}
+footer{text-align:center;color:#73839d;font-size:11px;padding:20px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}.stage canvas{height:370px}}
+@media(max-width:560px){header{position:relative}.top-actions{width:100%}.top-actions .pill{flex:1}.stage canvas{height:300px}.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:span 2}.panelhead h2{font-size:15px}}
+</style>
+</head>
+<body>
+<header><div class="head">
+ <div class="brand"><small>PHYSICSLAB · PHÒNG THÍ NGHIỆM ẢO</small><h1>VẬT LÍ 12 · BÀI 1: CẤU TRÚC CỦA CHẤT</h1><p>Sự chuyển thể · Mô hình phân tử · Chuyển động Brown</p></div>
+ <div class="top-actions"><button class="pill active" id="helpBtn">❔ Hướng dẫn</button><button class="pill" id="soundBtn" title="Bật/tắt âm báo">🔇 Âm thanh</button></div>
+</div></header>
+<main>
+ <nav class="tabs">
+  <button class="tab active" data-target="particles">01 · Mô hình phân tử</button>
+  <button class="tab" data-target="phase">02 · Sự chuyển thể</button>
+  <button class="tab" data-target="brown">03 · Chuyển động Brown</button>
+ </nav>
+
+ <section id="particles" class="experiment">
+  <div class="grid">
+   <div class="panel">
+    <div class="panelhead"><h2>Mô hình phân tử ở ba thể</h2><span class="tag">KÉO THẢ · QUAN SÁT</span></div>
+    <div class="stage"><canvas id="particleCanvas" width="1000" height="560"></canvas></div>
+    <div class="stats">
+     <div class="stat"><span>Nhiệt độ mô hình</span><strong id="pTempStat" class="cyan">20 °C</strong></div>
+     <div class="stat"><span>Tốc độ tương đối</span><strong id="pSpeedStat">Thấp</strong></div>
+     <div class="stat"><span>Trạng thái</span><strong id="pStateStat">Thể rắn</strong></div>
+    </div>
+    <div class="explain"><b id="pExplainTitle">Thể rắn</b><span id="pExplain">Các phân tử sắp xếp có trật tự và dao động quanh vị trí cân bằng. Hãy tăng nhiệt độ để quan sát biên độ dao động tăng.</span></div>
+   </div>
+   <aside class="panel">
+    <div class="panelhead"><h2>Bảng điều khiển</h2><span class="tag">THAO TÁC</span></div>
+    <div class="controls">
+     <div class="control"><label for="pState">Trạng thái của chất</label><select id="pState"><option value="solid">Thể rắn</option><option value="liquid">Thể lỏng</option><option value="gas">Thể khí</option></select></div>
+     <div class="control"><label for="pTemp">Nhiệt độ mô hình <output id="pTempOut">20 °C</output></label><input id="pTemp" type="range" min="0" max="100" value="20"></div>
+     <div class="btnrow"><button class="btn" id="pPause">Ⅱ Tạm dừng</button><button class="btn secondary" id="pReset">↺ Đặt lại</button></div>
+     <div class="right-section" style="padding:17px 0 0;border:0"><h3>Nhiệm vụ khám phá</h3><ul><li>Chọn lần lượt ba trạng thái của chất.</li><li>Kéo một phân tử để nhận biết vị trí của nó trong mô hình.</li><li>Thay đổi nhiệt độ và mô tả sự thay đổi chuyển động.</li></ul><h3>Câu hỏi</h3><p>Vì sao chất khí dễ bị nén hơn chất rắn và chất lỏng? Các phân tử ở thể rắn có đứng yên không?</p><div class="note">Mô hình vi mô có tính định tính. Khoảng cách, kích thước và tốc độ được phóng đại để dễ quan sát, không theo tỉ lệ thực.</div></div>
+    </div>
+   </aside>
+  </div>
+ </section>
+
+ <section id="phase" class="experiment hidden">
+  <div class="grid">
+   <div class="panel">
+    <div class="panelhead"><h2>Thí nghiệm đun nóng nước đá</h2><span class="tag">ĐO NHIỆT ĐỘ · ĐỒ THỊ</span></div>
+    <div class="stage"><canvas id="phaseCanvas" width="1000" height="560"></canvas></div>
+    <div class="stats">
+     <div class="stat"><span>Nhiệt độ</span><strong id="phTempStat" class="cyan">−10,0 °C</strong></div>
+     <div class="stat"><span>Thời gian</span><strong id="phTimeStat">0 s</strong></div>
+     <div class="stat"><span>Giai đoạn</span><strong id="phStateStat">Làm nóng nước đá</strong></div>
+    </div>
+    <div class="explain"><b>Quan sát hiện tượng</b><span id="phExplain">Cấp nhiệt cho nước đá. Theo dõi nhiệt độ và xác định giai đoạn nhiệt độ không đổi khi nước đá nóng chảy.</span></div>
+   </div>
+   <aside class="panel">
+    <div class="panelhead"><h2>Bảng điều khiển và đồ thị</h2><span class="tag">THÍ NGHIỆM</span></div>
+    <div class="controls">
+     <div class="control"><label for="phPower">Công suất cấp nhiệt <output id="phPowerOut">300 W</output></label><input id="phPower" type="range" min="100" max="600" step="50" value="300"></div>
+     <div class="control"><label for="phMass">Khối lượng nước đá <output id="phMassOut">0,20 kg</output></label><input id="phMass" type="range" min=".1" max=".5" step=".05" value=".2"></div>
+     <div class="btnrow"><button class="btn" id="phRun">▶ Bắt đầu đun</button><button class="btn secondary" id="phStep">+ 10 giây</button><button class="btn secondary" id="phReset">↺ Làm lại</button></div>
+     <div class="readouts"><div class="readout"><small>Nhiệt lượng đã cấp</small><strong id="phHeat">0 kJ</strong></div><div class="readout"><small>Trạng thái mẫu</small><strong id="phMatter">Nước đá</strong></div></div>
+     <div class="right-section" style="padding:18px 0 0;border:0"><div class="graph-title"><h3>Đồ thị nhiệt độ – thời gian</h3><span class="mini">T (°C) / t (s)</span></div><canvas class="graph" id="phGraph" width="900" height="320"></canvas><div class="graph-legend"><span><i class="dot" style="background:#f3ca42"></i>Nhiệt độ</span><span><i class="dot" style="background:#00c5df"></i>Đoạn chuyển thể</span></div><div class="note">Mô hình lí tưởng: bỏ qua thất thoát nhiệt; công suất truyền cho mẫu không đổi. Nước đá ban đầu ở −10 °C. Khi nóng chảy và khi sôi, nhiệt độ giữ không đổi trong mô hình.</div></div>
+    </div>
+   </aside>
+  </div>
+ </section>
+
+ <section id="brown" class="experiment hidden">
+  <div class="grid">
+   <div class="panel">
+    <div class="panelhead"><h2>Quan sát chuyển động Brown</h2><span class="tag">QUỸ ĐẠO HẠT · VA CHẠM</span></div>
+    <div class="stage"><canvas id="brownCanvas" width="1000" height="560"></canvas></div>
+    <div class="stats">
+     <div class="stat"><span>Nhiệt độ môi trường</span><strong id="bTempStat" class="cyan">25 °C</strong></div>
+     <div class="stat"><span>Cường độ chuyển động</span><strong id="bMotionStat">Vừa phải</strong></div>
+     <div class="stat"><span>Số phân tử hiển thị</span><strong id="bCountStat">120</strong></div>
+    </div>
+    <div class="explain"><b>Hiện tượng Brown</b><span>Hạt lớn màu cam chuyển động hỗn loạn do va chạm không cân bằng từ các phân tử chất lỏng chuyển động nhiệt.</span></div>
+   </div>
+   <aside class="panel">
+    <div class="panelhead"><h2>Bảng điều khiển</h2><span class="tag">THAO TÁC</span></div>
+    <div class="controls">
+     <div class="control"><label for="bTemp">Nhiệt độ môi trường <output id="bTempOut">25 °C</output></label><input id="bTemp" type="range" min="5" max="80" value="25"></div>
+     <div class="control"><label for="bDensity">Mật độ phân tử <output id="bDensityOut">Trung bình</output></label><input id="bDensity" type="range" min="1" max="3" value="2"></div>
+     <div class="btnrow"><button class="btn" id="bPause">Ⅱ Tạm dừng</button><button class="btn secondary" id="bReset">↺ Đặt lại quỹ đạo</button></div>
+     <div class="right-section" style="padding:18px 0 0;border:0"><h3>Nhiệm vụ khám phá</h3><ul><li>Quan sát đường đi không đều của hạt Brown.</li><li>Tăng nhiệt độ môi trường, theo dõi chuyển động của hạt.</li><li>Thay đổi mật độ phân tử và so sánh.</li></ul><h3>Câu hỏi</h3><p>Chuyển động Brown chứng tỏ điều gì về các phân tử cấu tạo nên chất lỏng?</p><div class="note">Các chấm xanh là phân tử chất lỏng được phóng đại; hạt cam là hạt Brown. Chuyển động được mô phỏng để minh họa va chạm ngẫu nhiên, không phải mô phỏng phân tử ở thang kích thước thực.</div></div>
+    </div>
+   </aside>
+  </div>
+ </section>
+</main>
+<footer>PHÒNG THÍ NGHIỆM ẢO VẬT LÍ 12 · BÀI 1 · Tệp HTML độc lập, có thể nhúng bằng iframe</footer>
+<script>
+const $=id=>document.getElementById(id);
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b===btn));document.querySelectorAll('.experiment').forEach(s=>s.classList.toggle('hidden',s.id!==btn.dataset.target));}));
+$('helpBtn').onclick=()=>alert('Chọn một thí nghiệm ở các tab phía trên. Dùng thanh trượt để thay đổi thông số; các nút chạy, tạm dừng và đặt lại điều khiển tiến trình. Đồ thị cập nhật theo dữ liệu mô phỏng.');
+let sound=false;$('soundBtn').onclick=()=>{sound=!sound;$('soundBtn').textContent=sound?'🔊 Âm thanh':'🔇 Âm thanh'};
+// Canvas helpers
+function setup(id){let c=$(id),x=c.getContext('2d');return {c,x,w:c.width,h:c.height}}
+function rr(x,a,b,w,h,r,fill){x.fillStyle=fill;x.beginPath();x.roundRect(a,b,w,h,r);x.fill()}
+function txt(x,s,a,b,size=17,color='#dce8f8',weight=500){x.fillStyle=color;x.font=`${weight} ${size}px Segoe UI,Arial`;x.fillText(s,a,b)}
+function gridBg(x,w,h){x.fillStyle='#0d1729';x.fillRect(0,0,w,h);x.strokeStyle='#17253a';x.lineWidth=1;for(let i=0;i<w;i+=48){x.beginPath();x.moveTo(i,0);x.lineTo(i,h);x.stroke()}for(let j=0;j<h;j+=48){x.beginPath();x.moveTo(0,j);x.lineTo(w,j);x.stroke()}}
+// Particle simulation
+const pc=setup('particleCanvas');let ps='solid',pt=20,pRun=true,parts=[],drag=null,pAnim;
+function makeParts(){parts=[];let cols=10,rows=8;for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){let ox=220+c*58,oy=105+r*48;parts.push({x:ox+(Math.random()-.5)*4,y:oy+(Math.random()-.5)*4,ox,oy,vx:(Math.random()-.5)*2,vy:(Math.random()-.5)*2})}}
+function particleDraw(){let {x,w,h}=pc;gridBg(x,w,h);rr(x,65,55,w-130,h-110,16,'#101d31');x.strokeStyle='#29415f';x.lineWidth=2;x.strokeRect(65,55,w-130,h-110);
+ let amp=.7+pt/24, speed=.3+pt/48;
+ parts.forEach((p,i)=>{if(pRun&&drag!==p){if(ps==='solid'){p.x=p.ox+Math.sin(performance.now()/95+i*1.7)*amp*4;p.y=p.oy+Math.cos(performance.now()/105+i*2.1)*amp*4}else{let f=ps==='gas'?2.1:1;p.x+=p.vx*speed*f;p.y+=p.vy*speed*f;let minX=85,maxX=w-85,minY=75,maxY=h-75;if(ps==='liquid'){p.x=Math.max(minX,Math.min(maxX,p.x));p.y=Math.max(minY,Math.min(maxY,p.y));if(p.x<=minX||p.x>=maxX)p.vx*=-1;if(p.y<=minY||p.y>=maxY)p.vy*=-1}else{if(p.x<minX||p.x>maxX)p.vx*=-1;if(p.y<minY||p.y>maxY)p.vy*=-1;p.x=Math.max(minX,Math.min(maxX,p.x));p.y=Math.max(minY,Math.min(maxY,p.y))}}}
+  x.beginPath();x.arc(p.x,p.y,9,0,Math.PI*2);x.fillStyle='#168bc9';x.fill();x.strokeStyle='#65d8f4';x.lineWidth=1.4;x.stroke();x.beginPath();x.arc(p.x-3,p.y-3,2.4,0,7);x.fillStyle='#c9f7ff';x.fill();
+ });
+ txt(x,'MÔ HÌNH PHÂN TỬ',85,38,15,'#7e9ab9',700);txt(x,ps==='solid'?'Dao động quanh vị trí cân bằng':ps==='liquid'?'Ở gần nhau và có thể đổi chỗ':'Chuyển động hỗn loạn, khoảng cách lớn',85,h-27,16,'#a9c2dd');
+ pAnim=requestAnimationFrame(particleDraw)}
+function updateP(){pt=+$('pTemp').value;$('pTempOut').textContent=pt+' °C';$('pTempStat').textContent=pt+' °C';$('pSpeedStat').textContent=pt<30?'Thấp':pt<70?'Trung bình':'Cao';$('pStateStat').textContent=ps==='solid'?'Thể rắn':ps==='liquid'?'Thể lỏng':'Thể khí';let title=ps==='solid'?'Thể rắn':ps==='liquid'?'Thể lỏng':'Thể khí';$('pExplainTitle').textContent=title;$('pExplain').textContent=ps==='solid'?'Các phân tử sắp xếp có trật tự và dao động quanh vị trí cân bằng. Khi nhiệt độ tăng, chuyển động nhiệt mạnh hơn.':ps==='liquid'?'Các phân tử ở gần nhau nhưng không cố định tại vị trí cân bằng, chúng có thể chuyển động và đổi chỗ.':'Các phân tử ở xa nhau, chuyển động hỗn loạn không ngừng và chiếm toàn bộ thể tích bình chứa.'}
+$('pState').onchange=e=>{ps=e.target.value;makeParts();updateP()};$('pTemp').oninput=updateP;$('pPause').onclick=()=>{pRun=!pRun;$('pPause').textContent=pRun?'Ⅱ Tạm dừng':'▶ Tiếp tục'};$('pReset').onclick=()=>{$('pState').value='solid';$('pTemp').value=20;ps='solid';pt=20;pRun=true;$('pPause').textContent='Ⅱ Tạm dừng';makeParts();updateP()};
+pc.c.addEventListener('pointerdown',e=>{let r=pc.c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*pc.w,y=(e.clientY-r.top)/r.height*pc.h;drag=parts.find(p=>Math.hypot(p.x-x,p.y-y)<20)||null;if(drag)pc.c.setPointerCapture(e.pointerId)});
+pc.c.addEventListener('pointermove',e=>{if(!drag)return;let r=pc.c.getBoundingClientRect();drag.x=(e.clientX-r.left)/r.width*pc.w;drag.y=(e.clientY-r.top)/r.height*pc.h;drag.ox=drag.x;drag.oy=drag.y});
+pc.c.addEventListener('pointerup',()=>drag=null);pc.c.addEventListener('pointercancel',()=>drag=null);
+makeParts();updateP();particleDraw();
+// Phase-change simulation: energy balance per mass, idealized closed sample; 1 simulation second = 1 physical second
+const phc=setup('phaseCanvas'),pg=setup('phGraph');let phRun=false,phTime=0,phEnergy=0,phTemp=-10,phPoints=[],phRAF;
+const CICE=2100,CW=4200,LF=334000,LV=2260000;
+function phState(){let m=+$('phMass').value,e=phEnergy/m,e1=CICE*10,e2=e1+LF,e3=e2+CW*100;if(e<e1)return 'Làm nóng nước đá';if(e<e2)return 'Đang nóng chảy';if(e<e3)return 'Làm nóng nước';return 'Đang hóa hơi'}
+function calcPh(){let m=+$('phMass').value,e=phEnergy/m,e1=CICE*10,e2=e1+LF,e3=e2+CW*100;if(e<e1)phTemp=-10+e/CICE;else if(e<e2)phTemp=0;else if(e<e3)phTemp=(e-e2)/CW;else phTemp=100}
+function advancePh(seconds){let P=+$('phPower').value;phEnergy+=P*seconds;phTime+=seconds;calcPh();phPoints.push({t:phTime,T:phTemp});if(phPoints.length>1000)phPoints.shift();updatePhReadouts();drawPhGraph()}
+function updatePhReadouts(){$('phTempStat').textContent=phTemp.toFixed(1).replace('.',',')+' °C';$('phTimeStat').textContent=phTime.toFixed(0)+' s';$('phStateStat').textContent=phState();$('phHeat').textContent=(phEnergy/1000).toFixed(1)+' kJ';$('phMatter').textContent=phTemp===0?'Nước đá + nước':phTemp===100?'Nước + hơi nước':phTemp<0?'Nước đá':'Nước lỏng';$('phExplain').textContent=phState()==='Đang nóng chảy'?'Nhiệt lượng cung cấp dùng cho quá trình chuyển thể; nhiệt độ giữ ở 0 °C trong mô hình lí tưởng.':phState()==='Đang hóa hơi'?'Nhiệt lượng cung cấp dùng cho quá trình hóa hơi; nhiệt độ giữ ở 100 °C trong mô hình lí tưởng.':'Quan sát nhiệt độ thay đổi theo thời gian và đối chiếu với trạng thái của mẫu.'}
+function drawPhase(){let {x,w,h}=phc;gridBg(x,w,h); // apparatus
+ x.strokeStyle='#8aa4c2';x.lineWidth=5;x.beginPath();x.moveTo(300,100);x.lineTo(300,410);x.quadraticCurveTo(300,440,330,440);x.lineTo(650,440);x.quadraticCurveTo(680,440,680,410);x.lineTo(680,100);x.stroke();
+ let liquidTop=260;rr(x,308,liquidTop,364,174,8,phTemp<0?'#c6eaff':'#77c9ef');
+ // ice blocks visible while energy is in initial and melting range
+ let m=+$('phMass').value,e=phEnergy/m,e1=CICE*10,e2=e1+LF;
+ if(e<e2){for(let i=0;i<7;i++){let bx=340+(i%4)*75,by=300+Math.floor(i/4)*55;x.fillStyle='#e8f7ff';x.strokeStyle='#83c8ed';x.lineWidth=2;x.fillRect(bx,by,52,42);x.strokeRect(bx,by,52,42)}}
+ if(phTemp>=0){for(let i=0;i<16;i++){let bx=330+(i*71+phTime*3)%320,by=415-(i*39+phTime*5)%140;x.beginPath();x.arc(bx,by,3+(i%3),0,7);x.fillStyle='#e9faff';x.fill()}}
+ // heater
+ x.strokeStyle='#f0a43c';x.lineWidth=9;x.beginPath();x.moveTo(365,465);x.lineTo(615,465);x.stroke();txt(x,'BÌNH CÁCH NHIỆT',375,75,17,'#b9cbe0',700);txt(x,'Dây đốt',700,475,14,'#f4b55e');
+ // thermometer
+ x.strokeStyle='#bdcadd';x.lineWidth=10;x.beginPath();x.moveTo(790,150);x.lineTo(790,390);x.stroke();x.beginPath();x.arc(790,400,19,0,7);x.fillStyle='#e75b62';x.fill();x.fillRect(786,390-Math.max(0,Math.min(100,phTemp+10))*2,8,10+Math.max(0,Math.min(100,phTemp+10))*2);txt(x,phTemp.toFixed(1)+' °C',825,285,24,'#ff858b',800);
+ txt(x,'Mô hình đun nóng nước đá',75,45,16,'#89a4c5',700);
+ phRAF=requestAnimationFrame(drawPhase)}
+function drawPhGraph(){let {x,w,h}=pg;gridBg(x,w,h);let left=65,right=w-25,top=22,bottom=h-45;x.strokeStyle='#71839e';x.lineWidth=1.5;x.beginPath();x.moveTo(left,top);x.lineTo(left,bottom);x.lineTo(right,bottom);x.stroke();for(let k=0;k<=5;k++){let yy=top+k*(bottom-top)/5;x.strokeStyle='#26364e';x.beginPath();x.moveTo(left,yy);x.lineTo(right,yy);x.stroke();txt(x,String(100-k*20),18,yy+4,12,'#8195b2')}txt(x,'T (°C)',12,16,12,'#a7b8cf');txt(x,'Thời gian (s)',right-95,h-12,12,'#a7b8cf');
+ if(phPoints.length>1){let maxT=Math.max(1,phTime),minT=0;x.beginPath();phPoints.forEach((p,i)=>{let xx=left+(p.t/maxT)*(right-left),yy=bottom-(p.T+10)/120*(bottom-top);if(i===0)x.moveTo(xx,yy);else x.lineTo(xx,yy)});x.strokeStyle='#f3ca42';x.lineWidth=3;x.stroke();}else txt(x,'Nhấn “Bắt đầu đun” để ghi dữ liệu',w/2-120,h/2,14,'#8295b2')}
+function phTick(){if(phRun){advancePh(1)}setTimeout(phTick,250)}
+$('phPower').oninput=e=>$('phPowerOut').textContent=e.target.value+' W';$('phMass').oninput=e=>$('phMassOut').textContent=(+e.target.value).toFixed(2).replace('.',',')+' kg';
+$('phRun').onclick=()=>{phRun=!phRun;$('phRun').textContent=phRun?'Ⅱ Tạm dừng':'▶ Tiếp tục đun'};
+$('phStep').onclick=()=>{if(!phRun)advancePh(10)};
+$('phReset').onclick=()=>{phRun=false;phTime=0;phEnergy=0;phTemp=-10;phPoints=[];$('phRun').textContent='▶ Bắt đầu đun';updatePhReadouts();drawPhGraph()};
+updatePhReadouts();drawPhase();drawPhGraph();phTick();
+// Brownian simulation: random molecular impacts transfer small random impulses to the observed particle
+const bc=setup('brownCanvas');let molecules=[],brown={x:500,y:280,vx:0,vy:0},trail=[],bRun=true,bRAF;
+function makeBrown(){molecules=[];for(let i=0;i<220;i++)molecules.push({x:75+Math.random()*850,y:70+Math.random()*420,vx:Math.random()*2-1,vy:Math.random()*2-1});brown={x:500,y:280,vx:0,vy:0};trail=[]}
+function drawBrown(){let {x,w,h}=bc;gridBg(x,w,h);x.strokeStyle='#36516e';x.lineWidth=3;x.strokeRect(55,50,w-110,h-100);let temp=+$('bTemp').value,dens=+$('bDensity').value,speed=.35+temp/35,count=[0,75,145,220][dens];
+ if(bRun){molecules.slice(0,count).forEach(m=>{m.x+=m.vx*speed*2;m.y+=m.vy*speed*2;if(m.x<62||m.x>w-62)m.vx*=-1;if(m.y<57||m.y>h-57)m.vy*=-1;let dx=brown.x-m.x,dy=brown.y-m.y,d=Math.hypot(dx,dy);if(d<20){let a=Math.atan2(dy,dx);brown.vx+=Math.cos(a)*(.05+Math.random()*.16)*speed;brown.vy+=Math.sin(a)*(.05+Math.random()*.16)*speed}});
+  // small random drag prevents unbounded velocity; boundary reflects the Brownian particle
+  brown.vx*=.985;brown.vy*=.985;brown.x+=brown.vx*2;brown.y+=brown.vy*2;if(brown.x<85||brown.x>w-85)brown.vx*=-1;if(brown.y<80||brown.y>h-80)brown.vy*=-1;brown.x=Math.max(85,Math.min(w-85,brown.x));brown.y=Math.max(80,Math.min(h-80,brown.y));trail.push({x:brown.x,y:brown.y});if(trail.length>180)trail.shift()}
+ molecules.slice(0,count).forEach(m=>{x.beginPath();x.arc(m.x,m.y,3.2,0,7);x.fillStyle='#26a9d8';x.fill()});
+ if(trail.length>1){x.beginPath();trail.forEach((p,i)=>i?x.lineTo(p.x,p.y):x.moveTo(p.x,p.y));x.strokeStyle='#f4a940';x.lineWidth=2;x.setLineDash([5,6]);x.stroke();x.setLineDash([])}
+ x.beginPath();x.arc(brown.x,brown.y,16,0,7);x.fillStyle='#f29b38';x.fill();x.strokeStyle='#ffd18b';x.lineWidth=2;x.stroke();x.beginPath();x.arc(brown.x-5,brown.y-5,4,0,7);x.fillStyle='#fff1d9';x.fill();
+ txt(x,'HẠT BROWN',75,35,14,'#f5bd70',800);txt(x,'PHÂN TỬ CHẤT LỎNG',w-250,35,14,'#6fc9eb',800);bRAF=requestAnimationFrame(drawBrown)}
+function updateB(){let t=+$('bTemp').value,d=+$('bDensity').value;$('bTempOut').textContent=t+' °C';$('bTempStat').textContent=t+' °C';$('bDensityOut').textContent=['','Thưa','Trung bình','Dày'][d];$('bCountStat').textContent=[0,75,145,220][d];$('bMotionStat').textContent=t<25?'Chậm':t<55?'Vừa phải':'Mạnh'}
+$('bTemp').oninput=updateB;$('bDensity').oninput=updateB;$('bPause').onclick=()=>{bRun=!bRun;$('bPause').textContent=bRun?'Ⅱ Tạm dừng':'▶ Tiếp tục'};$('bReset').onclick=makeBrown;
+makeBrown();updateB();drawBrown();
+</script>
+</body></html>
