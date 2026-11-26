@@ -1,4 +1,4 @@
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 const OPENROUTER_BASE_URL = 'https://openrouter.ai/api/v1';
 
 class OpenRouterService {
